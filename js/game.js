@@ -43,7 +43,7 @@ stoneImage.src = "images/stone.png";
 // Imagen del monstruo
 var monsterReady = false;
 var monsterImage = new Image();
-monsterImage.onload = function() 
+monsterImage.onload = function()
   {monsterReady = true;
 };
 //monsterImage.src = "images/monster.png";
@@ -86,16 +86,16 @@ var reset = function () {
 	// Ponemos a la princesa en algún lugar de la pantalla aleatoriamente
 	princess.x = 52 + (Math.random() * (canvas.width - 104));
 	princess.y = 52 + (Math.random() * (canvas.height - 104));
-	
+
 	// Ponemos la piedra piedra en algún lugar de la pantalla aleatoriamente
 	stone.x = 52 + (Math.random() * (canvas.width - 104));
 	stone.y = 52 + (Math.random() * (canvas.height - 104));
-	
+
 	// Ponemos el monstruo en algún lugar de la pantalla aleatoriamente
 	monster.x = 52 + (Math.random() * (canvas.width - 104));
 	monster.y = 52 + (Math.random() * (canvas.height - 104));
-	
-	// Alejamos al monstruo del heroe
+
+	// Alejamos al monstruo del heroe si aparece muy cerca
 	//Heroe izquierda
 	if (((hero.x - monster.x) < 0) && ((hero.x - monster.x) > -100)) {
 	  monster.x += 100;
@@ -118,7 +118,7 @@ var reset = function () {
 var update = function (modifier) {
 	if (38 in keysDown) { // Jugador presionando arriba
 	  // Heroe no se sale del mapa por arriba
-	  if (hero.y >= 28) { 
+	  if (hero.y >= 28) {
 	    if (
         hero.x <= (stone.x + 16)
         && stone.x <= (hero.x + 16)
@@ -154,7 +154,7 @@ var update = function (modifier) {
 	}
 	if (37 in keysDown) { // Jugador presionando izquierda
 	   // Heroe no se sale del mapa por la izquierda
-	  if (hero.x >= 28) { 
+	  if (hero.x >= 28) {
 	    if (
         hero.x <= (stone.x + 16)
         && stone.x <= (hero.x + 16)
@@ -202,7 +202,7 @@ var update = function (modifier) {
 		localStorage.setItem("stoLevel", level);
 		reset();
 	}
-	
+
 	// El heroe toca un monstruo
 	if (
 		hero.x <= (monster.x + 16)
@@ -215,10 +215,10 @@ var update = function (modifier) {
 		localStorage.setItem("stoLevel", 0);
 		gameover = true;
 	}
-	
+
 	// El monstruo avanza
 	if (hero.x <= monster.x) {
-	  monster.x -= monster.speed * modifier 
+	  monster.x -= monster.speed * modifier
 	  + monster.speed*level/10 * modifier;
 	}
 	if (monster.x <= hero.x) {
@@ -248,11 +248,11 @@ var render = function () {
 	if (princessReady) {
 		ctx.drawImage(princessImage, princess.x, princess.y);
 	}
-	
+
 	if (stoneReady) {
 		ctx.drawImage(stoneImage, stone.x, stone.y);
 	}
-	
+
 	if (monsterReady) {
 		ctx.drawImage(monsterImage, monster.x, monster.y);
 	}
@@ -265,7 +265,7 @@ var render = function () {
   	ctx.textBaseline = "top";
 	  ctx.fillText("Pelotas atrapadas: " + princessesCaught, 32, 32);
 	}
-	
+
 	if (gameover == true) {
 	  ctx.fillStyle = "rgb(0, 0, 0)";
 	  ctx.font = "60px Helvetica";
@@ -293,6 +293,3 @@ var then = Date.now();
 //The setInterval() method will wait a specified number of milliseconds, and then execute a specified function, and it will continue to execute the function, once at every given time-interval.
 //Syntax: setInterval("javascript function",milliseconds);
 setInterval(main, 1); // Ejecutamos tan rápido como sea posible
-
-
-
